@@ -89,6 +89,8 @@ adrAnggota findAnggota(listAnggota A,string namaAnggota){
 }
 
 void printAll(listTim T,listAnggota A){
+    // Belum selese buat ngetes doang
+
     adrTim P = firstTim(T);
     adrTim Q = firstAnggota(A);
 
