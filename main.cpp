@@ -1,9 +1,17 @@
 #include <iostream>
+#include "TUBES.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello world!" << endl;
-    return 0;
+    listTim T;
+    listAnggota A;
+    adrTim P;
+    adrAnggota Q;
+
+    createlistTim(T);
+    createlistAnggota(A);
+
+
 }
