@@ -14,6 +14,7 @@ using namespace std;
 struct infotypeTim{
     string nama;
     string pelatih;
+    int jumlahAnggota;
 };
 
 struct infotypeAnggota{
@@ -45,12 +46,20 @@ struct listAnggota{
 
 void createlistTim(listTim &T);
 void createlistAnggota(listAnggota &A);
-adrTim newElemenTim(infotypeTim x);
-adrAnggota newElemenAnggota(infotypeAnggota y);
-void addElemenTim(listTim &T, adrTim P);
-void addElemenAnggota(listAnggota &A, adrAnggota P);
+adrTim newElemenTim();
+adrAnggota newElemenAnggota();
+void addElemenTim(listTim &T);
+void addElemenAnggota(listAnggota &A);
 adrTim findTim(listTim T,string namaTim);
 adrAnggota findAnggota(listAnggota A,string namaAnggota);
+void connectedFam(listTim &T, listAnggota &A);
 void printAll(listTim T,listAnggota A);
+void deleteTim(listTim &T,listAnggota &A);
+void deleteAnggota(listTim &T,listAnggota &A);
+void deleteAnggotadaritim(listTim &T,listAnggota &A);
+void printTimdanAnggota(listTim T,listAnggota A);
+void maxAnggota(listTim T, listAnggota A);
+void minAnggota(listTim T, listAnggota A);
+string printMenu();
 
 #endif // TUBES_H_INCLUDED
