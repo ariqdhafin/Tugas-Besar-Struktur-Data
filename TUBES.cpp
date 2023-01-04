@@ -20,8 +20,9 @@ adrTim newElemenTim(){
 
 adrAnggota newElemenAnggota(){
     infotypeAnggota y;
-    cout << "Masukkan nama anggota : ";  cin >> y.nama;
+    cout << "Masukkan nama pemain : ";  cin >> y.nama;
     cout << "Masukkan umur : "; cin >> y.umur;
+    cout << "Masukkan posisi : "; cin >> y.posisi;
     adrAnggota P = new elemenAnggota;
     info(P) = y;
     parent(P) = NULL;
@@ -34,6 +35,7 @@ void addElemenTim(listTim &T){
     int N;
 
     cout << "Jumlah tim yang ingin dibuat: "; cin >> N;
+    cout<<endl;
     while(N != 0){
         P = newElemenTim();
         if(firstTim(T) != NULL){
@@ -55,7 +57,8 @@ void addElemenTim(listTim &T){
 void addElemenAnggota(listAnggota &A){
     adrAnggota Q;adrAnggota P;
     int N;
-    cout << "Jumlah anggota yang ingin dibuat: "; cin >> N;
+    cout << "Jumlah pemain yang ingin dibuat: "; cin >> N;
+    cout<<endl;
     while(N != 0){
         P = newElemenAnggota();
         if(firstAnggota(A) != NULL){
@@ -70,7 +73,7 @@ void addElemenAnggota(listAnggota &A){
         nextAnggota(P) = NULL;
         parent(P) = NULL;
         N--;
-        cout<< "Anggota berhasil dibuat"<<endl;
+        cout<< "Pemain berhasil dibuat"<<endl;
         cout << endl;
     }
 }
@@ -112,65 +115,131 @@ void connectedFam(listTim &T, listAnggota &A){
     int N;int i = 0; string namaAnggota; string namaTim;
     string Back = "n";
 
-    while (Back != "y"){
-        cout << "Nama Tim yang ingin dimasukkan: "; cin >> namaTim;
+    cout << "Nama Tim yang ingin dimasukkan: "; cin >> namaTim;
         adrTim P = findTim(T, namaTim);
         if (P != NULL) {
-            cout << "Jumlah anggota yang ingin dimasukkan: "; cin >> N;
+            cout << "Jumlah pemain yang ingin dimasukkan: "; cin >> N;
+            cout<<endl;
             while (N != 0){
-                cout << "Nama anggota yang ingin dimasukkan: "; cin >> namaAnggota;
+                cout << "Nama pemain yang ingin dimasukkan: "; cin >> namaAnggota;
                 adrAnggota Q = findAnggota(A, namaAnggota);
                 if (Q!= NULL){
                     parent(Q) = P;
-                    cout << "Anggota berhasil ditambahkan" << endl;
+                    cout << "Pemain berhasil ditambahkan" << endl;
+                    cout<<endl;
                     i++;
                 } else {
-                    cout << "Anggota gagal ditambahkan" << endl;
+                    cout << "Pemain gagal ditambahkan" << endl;
+                    cout<<endl;
                 }
                 N--;
             }
-            cout << "Kembali ke menu? (y/n): "; cin >> Back;
+
             info(P).jumlahAnggota = i;
         } else {
             cout << "Tim tidak ditemukan" << endl;
-            cout << "Kembali ke menu? (y/n): "; cin >> Back;
         }
-    }
     cout<<endl;
-
 }
 
 void printAll(listTim T,listAnggota A){
     adrTim P = firstTim(T);
     bool isEmpty = false;
+    int j = 1;
 
     if (firstTim(T) != NULL){
         while(P != NULL){
             adrAnggota Q = firstAnggota(A);
-            cout << "Nama Tim: " << info(P).nama << endl;
-            cout << "Banyak Anggota: " << info(P).jumlahAnggota << endl;
-            cout << "Anggota Tim: " << endl;
+            cout <<"["<<j<<"] "<<"Nama Tim\t : " << info(P).nama << endl;
+            cout << "    Pelatih\t : " << info(P).pelatih << endl;
+            cout << "    Banyak Pemain: " << info(P).jumlahAnggota << endl;
+            cout << "    Pemain Tim\t : ";
             int i = 1;
             while(Q != NULL){
                 if(parent(Q) == P){
-                    cout << i << "."<< info(Q).nama << endl;
+                    if(i == 1){
+                        cout << i << ". "<< info(Q).nama << endl;
+                    }else{
+                        cout <<"\t\t   "<<i << ". "<< info(Q).nama << endl;
+                    }
                     isEmpty = true;
                     i++;
                 }
                 Q = nextAnggota(Q);
             }
             if (isEmpty == false){
-                cout << "Anggota Tim kosong" << endl;
+                cout << "Pemain Tim kosong" << endl;
             }
             isEmpty = false;
             P = nextTim(P);
+            j++;
             cout << endl;
         }
+        cout<<"Pemain yang belum masuk tim :"<<endl;
+        adrAnggota Q = firstAnggota(A);
+        isEmpty = false;
+        int i = 1;
+        while(Q != NULL){
+            if(parent(Q) == NULL){
+                cout << i << "."<< info(Q).nama << endl;
+                isEmpty = true;
+                i++;
+            }
+            Q = nextAnggota(Q);
+        }
+        if (isEmpty == false){
+                cout << " - " << endl;
+            }
+        isEmpty = false;
+        cout << endl;
     } else {
-        cout<<"List Tim Kosong"<<endl;
+        cout<<"Belum ada Tim"<<endl;
     }
 
     cout<<endl;
+}
+
+void printPemain(listAnggota A){
+    adrAnggota P = firstAnggota(A);
+    int i = 1;
+
+    if (firstAnggota(A) != NULL){
+        while(P != NULL){
+            cout <<"["<< i << "] "<< "Nama Pemain\t: " << info(P).nama << endl;
+            cout << "    Umur\t: " << info(P).umur << endl;
+            cout << "    Posisi\t: " << info(P).posisi << endl;
+            if(parent(P) != NULL){
+                cout << "    Tim\t\t: " << info(parent(P)).nama<<endl;
+            }else{
+                cout << "    Tim\t\t: " << " - "<<endl;
+            }
+            i++;
+            P = nextAnggota(P);
+            cout << endl;
+        }
+    } else {
+        cout<<"Belum ada Pemain"<<endl;
+    }
+
+    cout<<endl;
+}
+
+void printJumlahTimdanAnggota(listTim T,listAnggota A){
+    adrTim P = firstTim(T);
+    adrAnggota Q = firstAnggota(A);
+    int jumlahTim = 0;
+    int jumlahAnggota = 0;
+
+    while(P != NULL){
+        jumlahTim++;
+        P = nextTim(P);
+    }
+    while(Q != NULL){
+        jumlahAnggota++;
+        Q = nextAnggota(Q);
+    }
+    cout<<"Jumlah Tim : "<<jumlahTim<<endl;
+    cout<<"Jumlah Pemain : "<<jumlahAnggota<<endl;
 }
 
 void deleteTim(listTim &T,listAnggota &A){
@@ -191,11 +260,14 @@ void deleteTim(listTim &T,listAnggota &A){
             nextTim(Q) = nextTim(P);
             nextTim(P) = NULL;
         }
-        while(nextAnggota(X) != NULL){
+        if(firstAnggota(A) != NULL){
+            while(X != NULL){
+            cout<<"halo"<<endl;
             if (parent(X) == P){
                 parent(X) = NULL;
             }
             X = nextAnggota(X);
+        }
         }
         cout<<"Tim berhasil dihapus"<<endl;
     }else{
@@ -207,7 +279,7 @@ void deleteTim(listTim &T,listAnggota &A){
 void deleteAnggota(listTim &T,listAnggota &A){
     string namaAnggota;
     adrAnggota Q = firstAnggota(A);
-    cout << "Nama Anggota yang ingin dihapus: "; cin >> namaAnggota;
+    cout << "Nama pemain yang ingin dihapus: "; cin >> namaAnggota;
     adrAnggota P = findAnggota(A, namaAnggota);
 
     if (P != NULL){
@@ -221,113 +293,107 @@ void deleteAnggota(listTim &T,listAnggota &A){
             nextAnggota(Q) = nextAnggota(P);
             nextAnggota(P) = NULL;
         }
-        cout<<"Anggota berhasil dihapus"<<endl;
+        cout<<"Pemain berhasil dihapus"<<endl;
         adrTim X = parent(P);
         if (X != NULL){
             info(X).jumlahAnggota = info(X).jumlahAnggota - 1;
         }
     }else{
-        cout<<"Anggota tidak ditemukan"<<endl;
+        cout<<"Pemain tidak ditemukan"<<endl;
     }
     cout<<endl;
 }
 
 void deleteAnggotadaritim(listTim &T,listAnggota &A){
     string namaAnggota;
-    cout << "Nama Anggota yang ingin dihapus dari tim: "; cin >> namaAnggota;
+    cout << "Nama pemain yang ingin dihapus dari tim: "; cin >> namaAnggota;
     adrAnggota P = findAnggota(A, namaAnggota);
 
     if (P != NULL){
         adrTim X = parent(P);
         parent(P) = NULL;
-        cout << "Anggota berhasil dihapus dari tim" << endl;
+        cout << "Pemain berhasil dihapus dari tim" << endl;
         if(X != NULL){
             info(X).jumlahAnggota = info(X).jumlahAnggota - 1 ;
         }
     } else {
-        cout << "Anggota gagal dihapus dari tim" << endl;
+        cout << "Pemain gagal dihapus dari tim" << endl;
     }
-}
-
-void printTimdanAnggota(listTim T,listAnggota A){
-    adrTim P = firstTim(T);
-    adrAnggota Q = firstAnggota(A);
-    int jumlahTim = 0;
-    int jumlahAnggota = 0;
-
-    while(P != NULL){
-        jumlahTim++;
-        P = nextTim(P);
-    }
-    while(Q != NULL){
-        jumlahAnggota++;
-        Q = nextAnggota(Q);
-    }
-    cout<<"Jumlah Tim : "<<jumlahTim<<endl;
-    cout<<"Jumlah Anggota : "<<jumlahAnggota<<endl;
-    cout << endl;
 }
 
 void maxAnggota(listTim T,listAnggota A){
     int i = 1;
-    adrTim P = firstTim(T);
-    int Max = info(P).jumlahAnggota;
 
-    while(P != NULL){
-        if (info(P).jumlahAnggota > Max){
-            Max = info(P).jumlahAnggota;
+    if(firstTim(T) != NULL){
+        adrTim P = firstTim(T);
+        int Max = info(P).jumlahAnggota;
+        while(P != NULL){
+            if (info(P).jumlahAnggota > Max){
+                Max = info(P).jumlahAnggota;
+            }
+            P = nextTim(P);
         }
-        P = nextTim(P);
-    }
 
-    cout<<"Tim dengan anggota terbanyak: "<<endl;
-    P = firstTim(T);
-    while(P != NULL){
-        if (info(P).jumlahAnggota == Max){
-            cout<<i<<"."<<info(P).nama<<endl;
-            i++;
+        cout<<"Tim dengan pemain terbanyak: "<<endl;
+        P = firstTim(T);
+        while(P != NULL){
+            if (info(P).jumlahAnggota == Max){
+                cout<<i<<"."<<info(P).nama<<endl;
+                i++;
+            }
+            P = nextTim(P);
         }
-        P = nextTim(P);
+        cout<<"Banyak pemain: "<<Max<<endl;
+    }else{
+        cout<<"Tidak ada Tim"<<endl;
     }
-    cout<<"Banyak Anggota: "<<Max<<endl;
     cout<<endl;
 }
 
 void minAnggota(listTim T, listAnggota A){
     int i = 1;
-    adrTim P = firstTim(T);
-    int Min = info(P).jumlahAnggota;
 
-    while(P != NULL){
-        if (info(P).jumlahAnggota < Min){
-            Min = info(P).jumlahAnggota;
+    if(firstTim(T) != NULL){
+        adrTim P = firstTim(T);
+        int Min = info(P).jumlahAnggota;
+        while(P != NULL){
+            if (info(P).jumlahAnggota < Min){
+                Min = info(P).jumlahAnggota;
+            }
+            P = nextTim(P);
         }
-        P = nextTim(P);
-    }
-    cout<<"Tim dengan anggota tersedikit: "<<endl;
+        cout<<"Tim dengan pemain tersedikit: "<<endl;
 
-    P = firstTim(T);
-    while(P != NULL){
-        if (info(P).jumlahAnggota == Min){
-            cout<<i<<"."<<info(P).nama<<endl;
-            i++;
+        P = firstTim(T);
+        while(P != NULL){
+            if (info(P).jumlahAnggota == Min){
+                cout<<i<<"."<<info(P).nama<<endl;
+                i++;
+            }
+            P = nextTim(P);
         }
-        P = nextTim(P);
+        cout<<"Banyak pemain: "<<Min<<endl;
+    }else{
+        cout<<"Tidak ada Tim"<<endl;
     }
-    cout<<"Banyak Anggota: "<<Min<<endl;
+    cout<<endl;
 }
 
-string printMenu(){
+string printMenu(listTim T,listAnggota A){
     string input;
     cout << "================================================" << endl;
     cout << "\t\tKLUB OLAH RAGA"<<endl;
+    cout << "\t\t  SEPAK BOLA"<<endl;
+    cout << "\t       TELKOM UNIVERSITY"<<endl;
     cout << "=====================MENU=======================" << endl;
-    cout << "1. Tambahkan tim dan anggota" << endl;
-    cout << "2. Cari tim dan anggota" << endl;
-    cout << "3. Hapus tim dan anggota" << endl;
-    cout << "4. Tim dengan anggota terbanyak dan tersedikit" << endl;
-    cout << "5. Tampilkan tim beserta anggotanya" << endl;
+    cout << "1. Tambahkan tim dan pemain" << endl;
+    cout << "2. Cari tim dan pemain" << endl;
+    cout << "3. Hapus tim dan pemain" << endl;
+    cout << "4. Tim dengan pemain terbanyak dan tersedikit" << endl;
+    cout << "5. Tampilkan tim beserta pemainya" << endl;
     cout << "6. Close program" << endl;
+    cout << "------------------------------------------------" << endl;
+    printJumlahTimdanAnggota(T,A);
     cout << "------------------------------------------------" << endl;
     cout << "Masukkan pilihan: "; cin>>input;
 

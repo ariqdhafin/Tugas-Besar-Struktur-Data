@@ -16,7 +16,7 @@ int main()
     createlistTim(T);
     createlistAnggota(A);
 
-    string pilihan = printMenu();
+    string pilihan = printMenu(T,A);
 
     while(pilihan != "6"){
         system("cls");
@@ -24,8 +24,8 @@ int main()
             while(pilihan != "4"){
                 cout << "------------------------------------------------" << endl;
                 cout << "1. Tambahkan tim baru" <<endl;
-                cout << "2. Tambahkan anggota baru" << endl;
-                cout << "3. Tambahkan anggota kedalam tim" << endl;
+                cout << "2. Tambahkan pemain baru" << endl;
+                cout << "3. Tambahkan pemain kedalam tim" << endl;
                 cout << "4. Kembali" << endl;
                 cout << "------------------------------------------------" << endl;
                 cout << "Masukkan pilihan: "; cin>>pilihan;
@@ -52,7 +52,7 @@ int main()
             while(pilihan != "3"){
                 cout << "------------------------------------------------" << endl;
                 cout << "1. Cari tim" << endl;
-                cout << "2. Cari anggota" << endl;
+                cout << "2. Cari pemain" << endl;
                 cout << "3. Kembali" << endl;
                 cout << "------------------------------------------------" << endl;
                 cout << "Masukkan pilihan: "; cin>>pilihan;
@@ -75,18 +75,24 @@ int main()
                     }else{
                         cout << "Nama Tim : "<< info(P).nama<<endl;
                         cout << "Nama Pelatih: "<< info(P).pelatih<<endl;
-                        cout << "Jumlah Anggota: " << info(P).jumlahAnggota << endl;
+                        cout << "Jumlah pemain: " << info(P).jumlahAnggota << endl;
                         cout << endl;
                     }
                 }else if(pilihan == "2"){
-                    cout << "Masukkan nama anggota yang ingin dicari: "; cin >> namaAnggota;
+                    cout << "Masukkan nama pemain yang ingin dicari: "; cin >> namaAnggota;
                     Q = findAnggota(A, namaAnggota);
                     if(Q == NULL){
-                        cout<< "Nama anggota tidak terdaftar" << endl;
+                        cout<< "Nama pemain tidak terdaftar" << endl;
                         cout << endl;
                     } else {
-                        cout << "Nama Anggota: " << info(Q).nama << endl;
-                        cout << "Umur Anggota: " << info(Q).umur << endl;
+                        cout << "Nama pemain\t: " << info(Q).nama << endl;
+                        cout << "Umur\t\t: " << info(Q).umur << endl;
+                        cout << "Posisi\t\t: " << info(Q).posisi << endl;
+                        if(parent(Q) != NULL){
+                            cout << "Tim\t\t: " << info(parent(Q)).nama << endl;
+                        }else{
+                            cout << "Tim\t\t: - " << endl;
+                        }
                         cout << endl;
                     }
                 }
@@ -96,8 +102,8 @@ int main()
             while(pilihan != "4"){
                 cout << "------------------------------------------------" << endl;
                 cout << "1. Hapus Tim" <<endl;
-                cout << "2. Hapus Anggota" << endl;
-                cout << "3. Hapus Anggota dari Tim" << endl;
+                cout << "2. Hapus pemain" << endl;
+                cout << "3. Hapus pemain dari Tim" << endl;
                 cout << "4. Kembali" << endl;
                 cout << "------------------------------------------------" << endl;
                 cout << "Masukkan pilihan: "; cin>>pilihan;
@@ -119,7 +125,6 @@ int main()
                     deleteAnggotadaritim(T,A);
                 }
 
-                system("cls");
             }
         }else if(pilihan == "4"){
             while(pilihan != "3"){
@@ -131,13 +136,13 @@ int main()
                 cout << "Masukkan pilihan: "; cin>>pilihan;
                 cout << endl;
 
-                system("cls");
-
                 while(pilihan != "1" && pilihan != "2" && pilihan != "3"){
                     cout << "Input invalid" << endl;
                     cout << "Masukkan pilihan: "; cin>>pilihan;
                     cout << endl;
                 }
+
+                system("cls");
 
                 if(pilihan == "1"){
                     maxAnggota(T,A);
@@ -148,14 +153,12 @@ int main()
         }else if(pilihan == "5"){
             while(pilihan != "3"){
                 cout << "------------------------------------------------" << endl;
-                cout << "1. Tampilkan semua" <<endl;
-                cout << "2. Tampilkan jumlah tim dan anggota keseluruhan" << endl;
+                cout << "1. Tampilkan Tim dan Pemainya" <<endl;
+                cout << "2. Tampilkan Semua Pemain" << endl;
                 cout << "3. Kembali" << endl;
                 cout << "------------------------------------------------" << endl;
                 cout << "Masukkan pilihan: "; cin>>pilihan;
                 cout << endl;
-
-                system("cls");
 
                 while(pilihan != "1" && pilihan != "2" && pilihan != "3"){
                     cout << "Input invalid" << endl;
@@ -163,17 +166,19 @@ int main()
                     cout << endl;
                 }
 
+                system("cls");
+
                 if(pilihan == "1"){
                     printAll(T,A);
                 }else if (pilihan == "2"){
-                    printTimdanAnggota(T,A);
+                    printPemain(A);
                 }
             }
         }else{
             cout<<"Input invalid"<<endl;
             cout<<endl;
         }
-        pilihan = printMenu();
+        pilihan = printMenu(T,A);
     }
     cout<<"Anda telah keluar dari program"<<endl;
 }

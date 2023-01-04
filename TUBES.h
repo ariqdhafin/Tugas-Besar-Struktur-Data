@@ -20,6 +20,7 @@ struct infotypeTim{
 struct infotypeAnggota{
     string nama;
     string umur;
+    string posisi;
 };
 
 typedef struct elemenTim* adrTim;
@@ -54,12 +55,13 @@ adrTim findTim(listTim T,string namaTim);
 adrAnggota findAnggota(listAnggota A,string namaAnggota);
 void connectedFam(listTim &T, listAnggota &A);
 void printAll(listTim T,listAnggota A);
+void printJumlahTimdanAnggota(listTim T,listAnggota A);
+void printPemain(listAnggota A);
 void deleteTim(listTim &T,listAnggota &A);
 void deleteAnggota(listTim &T,listAnggota &A);
 void deleteAnggotadaritim(listTim &T,listAnggota &A);
-void printTimdanAnggota(listTim T,listAnggota A);
 void maxAnggota(listTim T, listAnggota A);
 void minAnggota(listTim T, listAnggota A);
-string printMenu();
+string printMenu(listTim T,listAnggota A);
 
 #endif // TUBES_H_INCLUDED
