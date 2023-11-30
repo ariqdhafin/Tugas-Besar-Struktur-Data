@@ -34,7 +34,7 @@ void addElemenTim(listTim &T){
     adrTim Q;adrTim P;
     int N;
 
-    cout << "Jumlah tim yang ingin dibuat: "; cin >> N;
+    cout << "Jumlah tim yang ingin ditambahkan: "; cin >> N;
     cout<<endl;
     while(N != 0){
         P = newElemenTim();
@@ -57,7 +57,7 @@ void addElemenTim(listTim &T){
 void addElemenAnggota(listAnggota &A){
     adrAnggota Q;adrAnggota P;
     int N;
-    cout << "Jumlah pemain yang ingin dibuat: "; cin >> N;
+    cout << "Jumlah pemain yang ingin ditambahkan: "; cin >> N;
     cout<<endl;
     while(N != 0){
         P = newElemenAnggota();
@@ -238,7 +238,7 @@ void printJumlahTimdanAnggota(listTim T,listAnggota A){
         jumlahAnggota++;
         Q = nextAnggota(Q);
     }
-    cout<<"Jumlah Tim : "<<jumlahTim<<endl;
+    cout<<"Jumlah Tim    : "<<jumlahTim<<endl;
     cout<<"Jumlah Pemain : "<<jumlahAnggota<<endl;
 }
 
@@ -262,12 +262,11 @@ void deleteTim(listTim &T,listAnggota &A){
         }
         if(firstAnggota(A) != NULL){
             while(X != NULL){
-            cout<<"halo"<<endl;
-            if (parent(X) == P){
-                parent(X) = NULL;
+                if (parent(X) == P){
+                    parent(X) = NULL;
+                }
+                X = nextAnggota(X);
             }
-            X = nextAnggota(X);
-        }
         }
         cout<<"Tim berhasil dihapus"<<endl;
     }else{
